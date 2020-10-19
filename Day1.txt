@@ -359,5 +359,26 @@ rajesh-mumbai.ppk
 Assignment 1 - https://www.devopsschool.com/blog/ansible-adhoc-commands-lab-excercise-part-1/
 
 
+=======================================ARS======================
+Anugu Divya	65.0.76.155
+S. Leebon	13.233.233.204
+Maha krishnan S	52.66.110.122
+Praveen Kumar Pethuraj	52.66.110.122
+Sivasree Balakrishnan	13.232.221.211
+Rubini Udayashankar	13.233.229.34
+Prabu Chandran	65.0.103.142
+RamaKrishna Pasupuleti	15.206.94.193
+JITHIN P JOSEPH	13.232.176.22
+Debabrata Sahu	13.233.83.10
+rajesh shankar 	65.0.104.151
+Raja Somasundaram	65.0.132.235
+Jeevanandan Krishna Kumar	13.233.232.135
+Anand.M	13.234.116.12
+Sarvanan.Bha	65.0.95.29
+Navin Nandakumar	35.154.21.42
+Thaiko Selvaraj	13.126.53.161
+Mohamed Yousuff Kajah	13.232.76.48
+Sureshkumar Rajendran	13.126.227.194
+Priya M	13.233.127.234
 
 
