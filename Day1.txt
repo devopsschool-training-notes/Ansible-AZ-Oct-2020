@@ -154,11 +154,12 @@ has LIST of IP Addressess of ARS.
 			- COMMAND LINE
 			- FILE
 			- SCRIPT
-
+	- FILE has
+	----------------------
 	GROUP
 	GROUP OF GROUP
-	VARS
 	BEHAVIOURAL PARAM
+	VARS
 
 ------------------------------------------------------
 What is Playbook?
@@ -381,4 +382,120 @@ Mohamed Yousuff Kajah	13.232.76.48
 Sureshkumar Rajendran	13.126.227.194
 Priya M	13.233.127.234
 
+==================================================================================================================
 
+ansible all -i 13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254,13.232.164.254, -m yum -a "name=httpd state=removed" -u centos --key-file=node.pem -b
+
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=installed" -u centos --key-file=node.pem -b 
+ansible all -i 13.232.164.254, -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254, -m service -a "name=httpd state=started" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254, -m file -a "name=/opt/ramu.txt state=touch" -u centos --key-file=node.pem -b
+
+inventory
+============================
+- INI Format
+- JSON 
+
+65.0.76.155
+13.233.233.204
+52.66.110.122
+13.232.221.211
+
+
+ansible all -i inventory -m yum -a "name=httpd state=installed" -u centos --key-file=node.pem -b 
+ansible all -i inventory -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+ansible all -i inventory -m service -a "name=httpd state=started" -u centos --key-file=node.pem -b
+
+[web]
+65.0.76.155
+13.233.233.204
+
+[app]
+52.66.110.122
+13.233.229.34
+
+ansible web -i invent_group -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+ansible all -i invent_group -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+
+
+[allserver:children]
+web
+app
+
+[web]
+65.0.76.155
+13.233.233.204
+
+[app]
+52.66.110.122
+13.233.229.34
+
+[cache]
+52.66.110.122
+13.233.229.34
+52.66.110.122
+13.233.229.34
+52.66.110.122
+13.233.229.34
+
+[gty]
+52.66.110.122
+13.233.229.34
+52.66.110.122
+13.233.229.34
+52.66.110.122
+13.233.229.34
+
+ansible allserver -i invent_gog -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+
+=========================================================
+Behaviorial Param
+===========================
+https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters
+
+[my]
+65.0.76.155	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
+13.233.233.204	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
+
+[ars1]
+65.0.76.155	
+13.233.233.204	
+
+[ars1:vars]
+ansible_ssh_private_key_file=node.pem 
+ansible_become=yes
+ansible_user=centos
+	
+[allserver:children]
+web
+app
+
+[web]
+65.0.76.155
+13.233.233.204	ansible_become=yes
+
+[app]
+52.66.110.122	ansible_ssh_private_key_file=node.pem
+13.233.229.34 ansible_user=centos ansible_password=pass123
+app1 ansible_host=13.233.229.33 ansible_port=24 
+
+[cache]
+52.66.110.122
+13.233.229.34	user and pass & ssh 23
+52.66.110.122	user and key with Sudo with password
+13.233.229.34	user and key with Sudo without password
+52.66.110.122	user and key
+13.233.229.34	user and pass
+
+
+ansible my -i invent_bp -m copy -a "dest=/var/www/html/index.html src=index.html"
+
+ansible ars1 -i invent_bp -m copy -a "dest=/var/www/html/index.html src=index.html"
+
+==============
+More Inventory Pattern
+https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html
+
+
+
+ansible my,web -i invent_bp -m copy -a "dest=/var/www/html/index.html src=index.html"
