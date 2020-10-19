@@ -1,0 +1,363 @@
+Rajesh Kumar
+
+Ansible-AZ-Oct-2020
+=============================
+1 234567890
+===============================================
+9:30 AM IST - 5:30 PM IST
+===========================
+11:00 AM - BREAK - 15 mins
+3:00 PM - BREAK - 15 mins
+1:00 PM - 2:00 PM - LUNCH
+=================================
+Demo + LAB == AWS
+======================================
++91 8105843520
+www.DevOpsSchool.com
+rajesh@devopsschool.com
+======================================
+Rule -
+=====================================================
+What is Ansible?
+================
+- Config mgmt tool
+- Written in Python
+- Release
+	Ansible		- CMD + Community + Free
+	Ansible AWX	- CMD + GUI + Community + FREE === MOST LATEST BETA of TOWER + NO SUPPORT
+	Ansible Tower	- CMD + GUI + Trial + Paid	 === MOST STABLE RELEASE of TOWER
+- From Redhat
+- Version - 2.9X
+- DSL language
+- Agent less - Need discussion
+
+Config mgmt 
+	of What?
+	-------------------
+	SERVER(S)
+	QA - PREPROD - PROD - DEV
+
+	Ansible Manage config of Server(s)!!!
+	What is there in Each server to manage their config??
+	-----------------------------------------------------
+	Resources		Param			Action	
+	- files			filename		A | D | C
+	- directory		dirname			A | D | C
+	- services		servicename		S S E D R
+	- package		packname		I R U
+	- user			username		A E D
+	- group
+	- apt
+	- yum
+	- bash
+	- ps
+
+	Ansible is managing config of above resources in multiple server
+	for...
+tool
+	- Saving cost
+	- Saving time
+	- Imp Eff*
+==============================================================
+Why Ansible?
+		Managing MULTIPLE Servers and config Parrell is not an easy tasks
+		java + pYTHON
+			NOT easy to learn,share,debug, extend, test,
+		BASH + PS
+			IS NOT CROSS platform
+
+		We need a tools for
+			easy to learn,share,debug, extend, test,
+			cross platform
+			avoid repeative actions == IDEOMPOTENT
+==========================================================================
+Other tools - 
+	PROGRAMMING - Ansible - Puppet - Chef - Cfengine - Salt
+			- Terraform 
+	GUI - Octopus Deploy + UDeploy
+==========================================================================
+How Ansible Works!!!!
+Ansible Architecture?!!!!!
+
+HUMAN ---> SERVER ---> AGENT(S)
+------------------------------------
+HUMAN ---> Ansible Control Server --> Ansible Remote Server(S)
+HUMAN ---> ACS -> ARS(S)
+
+ACS					ARS
+-------------------------------------------------------
+LINUX					LINUX + WINDOWS
+64 BIT					32 BIT + 64 BIT
+Ansible					NA
+- SSH + PYTHON 2.7X			LINUX = SSH + PYTHON 2.7X
+					WINDOWS = WINRM + PS3.0 + DOTNET 4.X
+
+Ansible connect to linux		SSH
+Ansible Connect to windows		WINRM - HTTP
+
+==========================================================================
+Roles of YOU???
+Dev - Write Ansible Program(Playbook-role), test it and share with OPS.
+Ops - Manage ARS servers, auth, and Apply Ansible Program(Playbook-role) in ARS 
+==========================================================================
+Components Of ACS 
+----------------------------------------------------
+Ansible
+	- You would more than 15 tools.  -- Executables
+	- You would get 3000s of Modules
+	- You would get 100s of plugins
+	- You would get ansible config file
+
+Playbooks
+
+Inventory
+------------------------------------------------------
+What is Module?
+-------------------------------
+	-- UNIT OF WORK in ARS.
+	Module is written code(Python,PS,bash)
+		Which accept parameter
+		& DO ONE THING. This is called (state)
+		This is send by ACS to ARS(S)
+		Execute in ARS.
+		Each Module has Param
+		Each Module has (state)
+	1000s of module we have in Ansible
+	-------------------------------
+	packmgmr - what pack -- what to do
+	yum - httpd - install
+	So YUM is a module.
+	-------------------------------
+https://docs.ansible.com/ansible/2.9/modules/modules_by_category.html	
+
+------------------------------------------------------
+What is plugins?
+-------------------------------
+	Plugins are written code(Python only)
+	Located at ACS only
+	This empower FEATURE OF Ansible
+		Built-int Plugins by Ansible
+		Custom plugins
+	https://docs.ansible.com/ansible/latest/plugins/plugins.html
+------------------------------------------------------
+What is Ansible Config file?
+-------------------------------
+/etc/ansible/ansible.cfg
+	---- Can change a default behaiour of Ansible
+
+------------------------------------------------------
+What is Inventory? aka HOSTS
+-------------------------------
+has LIST of IP Addressess of ARS.
+    ----
+	List can be on 
+			- COMMAND LINE
+			- FILE
+			- SCRIPT
+
+	GROUP
+	GROUP OF GROUP
+	VARS
+	BEHAVIOURAL PARAM
+
+------------------------------------------------------
+What is Playbook?
+-------------------------------
+Playbook is your PROGRAM written in YAML
+	         --------
+		 Desire  declared in YAML
+		
+		Sent by ACS to ARS(S) in Parrell
+		Execute in ARS
+		
+Playbook 
+		Has Play
+		Each Play has
+			HOSTS: localhost or GROUP OR ALL
+			TASKS: What to be executed??
+				Task1: Its a 1 MODULE with its param and state
+				Task2: Its a 1 MODULE with its param and state
+				Task3: Its a 1 MODULE with its param and state
+				Task4: Its a 1 MODULE with its param and state
+				Task5: Its a 1 MODULE with its param and state
+
+		Play1
+			Hosts:
+			Tasks:
+
+		Play2
+			Hosts:
+			Tasks:
+
+		Play3
+			Hosts:
+			Tasks:
+===========================================================================
+Step 1 - Get one ACS server
+		- Install Ansible
+		13.232.164.254
+		centos
+https://www.devopsschool.com/blog/how-to-install-ansible-in-centos-7-rhel-7/	
+
+
+Putty - https://www.devopsschool.com/blog/how-to-login-linux-server-of-aws-from-windows-using-putty/
+		Step 4 
+		Step 5
+		Step 6
+
+Step 2 - We need to discuss.
+==================================
+using ADHOC command 
+		Do one task in ONE MACHINE(localhost)								
+		Do one task in ONE REMOTE MACHINE									DONE		
+		Do one task in MULTIPLE REMOTE MACHINES using Inventory				DONE	  
+		Do one task in MULTIPLE REMOTE MACHINES using group in Inventory	DONE 
+		
+using Playbook(Program)
+		Do Multiple tasks(Playbook) in ONE MACHINE(localhost) DONE
+		Do Multiple tasks(Playbook) in ONE REMOTE MACHINE		DONE
+		Do Multiple tasks(Playbook) in MULTIPLE REMOTE MACHINE using Inventory DONE
+		Do Multiple tasks(Playbook) in MULTIPLE REMOTE MACHINE using group in Inventory DONE
+		Do Multiple tasks(Playbook) in MULTIPLE REMOTE MACHINE using group of group in Inventory DONE
+		Do Multiple tasks(Playbook) in MULTIPLE REMOTE MACHINE using environment directory ===================================================================
+What do you want in ARS?
+=============================
+Project AKA Assignment AKA Requirement
+-----------------------------------
+- Setup a webserver in centos
+
+Psucode
+-----------
+Step 1 - Install HTTPD server			yum
+Step 2 - Copy Index.html(Package)		copy
+Step 3 - Start a HTTP server			service
+Step 4 - Create one file in /opt		file
+
+"ansible module for install package"
+                    ----------------
+===========================================================================
+
+ansible localhost <what Module> <what pararm> <what action> 
+ansible localhost -m yum -a "name=httpd state=installed" 
+ansible localhost -m yum -a "name=httpd state=removed"
+
+ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" 
+
+  48  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html"
+   49  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -v
+   50  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -vv
+   51  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -vvv
+   52  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -vvvv
+   53  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -vvvvc
+   54  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -vvvvv
+   55  ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html" -vvvvvv
+
+
+ansible localhost -m yum -a "name=httpd state=installed" 
+ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html"
+ansible localhost -m service -a "name=httpd state=started" 
+ansible localhost -m file -a "name=/opt/ramu.txt state=touch" 
+
+================================================================
+How to authentication and Authorize ARS from ACS?
+==================================================
+authentication - How to login to ARS?
+------------------LINUX----------------------------------
+Username and Password		=> -u and -k
+Username and Key		=> -u and --key-file	
+
+------------------Windows----------------------------------
+Username and Password
+
+
+Authorization - What you are allowd to do in ARS?
+------------------LINUX----------------------------------
+Sudo 
+	SUDO without Password		-b 
+	Sudo with Password		-b -K
+	Sudo with Another User and Password
+					-b --become-user -K 
+	
+------------------Windows----------------------------------
+Administrator
+
+
+
+
+ansible localhost -m yum -a "name=httpd state=installed" 
+ansible localhost -m copy -a "dest=/var/www/html/index.html src=index.html"
+ansible localhost -m service -a "name=httpd state=started" 
+ansible localhost -m file -a "name=/opt/ramu.txt state=touch"
+
+=============================================================================================
+Do one task in ONE REMOTE MACHINE
+=============================================================================================
+13.232.164.254
+=================
+
+
+ansible 13.232.164.254 -m yum -a "name=httpd state=installed" 
+ansible 13.232.164.254, -m yum -a "name=httpd state=installed" 
+ansible -i 13.232.164.254, -m yum -a "name=httpd state=installed"
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=installed"
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=installed" -u centos --key-file=node.pem
+
+	---
+	GROUP
+
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=removed" -u centos --key-file=node.pem
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=installed" -u centos --key-file=node.pem 
+ansible all -i 13.232.164.254, -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem
+ansible all -i 13.232.164.254, -m service -a "name=httpd state=started" -u centos --key-file=node.pem
+ansible all -i 13.232.164.254, -m file -a "name=/opt/ramu.txt state=touch" -u centos --key-file=node.pem
+
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=removed" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254, -m yum -a "name=httpd state=installed" -u centos --key-file=node.pem -b 
+ansible all -i 13.232.164.254, -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254, -m service -a "name=httpd state=started" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254, -m file -a "name=/opt/ramu.txt state=touch" -u centos --key-file=node.pem -b
+
+ansible all -i 13.232.164.254,13.232.164.255, -m yum -a "name=httpd state=removed" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254,13.232.164.255, -m yum -a "name=httpd state=installed" -u centos --key-file=node.pem -b 
+ansible all -i 13.232.164.254,13.232.164.255, -m copy -a "dest=/var/www/html/index.html src=index.html" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254,13.232.164.255, -m service -a "name=httpd state=started" -u centos --key-file=node.pem -b
+ansible all -i 13.232.164.254,13.232.164.255, -m file -a "name=/opt/ramu.txt state=touch" -u centos --key-file=node.pem -b
+
+Lab and Assignment
+==============ACS=======================
+
+Anugu Divya	15.207.84.79
+S. Leebon	13.235.24.89
+Maha krishnan S	13.235.114.102
+Praveen Kumar Pethuraj	52.66.12.163
+Sivasree Balakrishnan	65.0.80.241
+Rubini Udayashankar	13.233.21.245
+Prabu Chandran	13.232.7.45
+RamaKrishna Pasupuleti	65.0.101.224
+JITHIN P JOSEPH	13.233.207.71
+Debabrata Sahu	15.207.84.228
+rajesh shankar 	13.233.174.21
+Raja Somasundaram	13.235.248.71
+Jeevanandan Krishna Kumar	65.0.30.202
+Anand.M	65.0.133.169
+Sarvanan.Bha	13.233.69.178
+Navin Nandakumar	13.232.80.254
+Thaiko Selvaraj	3.6.93.189
+Mohamed Yousuff Kajah	13.127.163.87
+Sureshkumar Rajendran	65.0.133.231
+Priya M	13.233.16.215
+
+User name - centos
+Key
+	PEM - for ssh
+	PPK - for putty
+
+https://www.devopsschool.com/notes/docker/2019/
+rajesh-mumbai.pem
+rajesh-mumbai.ppk
+
+Assignment 1 - https://www.devopsschool.com/blog/ansible-adhoc-commands-lab-excercise-part-1/
+
+
+
+
