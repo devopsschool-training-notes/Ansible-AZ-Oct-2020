@@ -71,6 +71,500 @@ Priya M	13.233.97.114
 Assignment 
 https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-2/
 
+===============================================================
+Variables
+Templates
+Handlers
+files
+============================
+What is Variable?
+	key and value.
+	variable and value.
+
+Why we use it?
+	To avoid hard coding
+	To intropolate diff value at diff places.
+=====================================
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+
+Which are the places you can declare variables in Ansible?
+----------------
+command line values (for example, -u my_user, these are not variables)
+role defaults (defined in role/defaults/main.yml) 1
+inventory file or script group vars 2
+inventory group_vars/all 3
+playbook group_vars/all 3
+inventory group_vars/* 3
+playbook group_vars/* 3
+inventory file or script host vars 2
+inventory host_vars/* 3
+playbook host_vars/* 3
+host facts / cached set_facts 4
+play vars
+play vars_prompt
+play vars_files
+role vars (defined in role/vars/main.yml)
+block vars (only for tasks in block)
+task vars (only for the task)
+include_vars
+set_facts / registered vars
+role (and include_role) params
+include params
+extra vars (for example, -e "user=my_user")(always win precedence)
+
+====================================================
+Variables in Playbook
+Variables in Inventory
+
+https://www.devopsschool.com/tutorial/ansible/variables/index.html
+
+13.233.149.198
+13.234.114.107
+
+=====
+Ansible variables-1 playbook
+=====
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshk
+    package: "httpd"
+    service: "httpd"
+
+  tasks:
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname }}"
+-------------------------------------  
+=====
+Ansible variables external file..
+=====
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshInPlaybook
+    package: "httpd"
+    service: "httpd"
+
+  vars_files:
+    - "external_vars.yml"
+
+  tasks:
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname }}" 
+
+-------------------------------------  
+=====
+Ansible variables at task level
+=====
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshInPlaybook
+    package: "httpd"
+    service: "httpd"
+
+  vars_files:
+    - "external_vars.yml"
+
+  tasks:
+  - name: include default step variables
+    include_vars: task_var.yml
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname }}" 
+
+
+-------------------------------------  
+=====
+Ansible variables through prompt
+=====
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshInPlaybook
+    package: "httpd"
+    service: "httpd"
+
+  vars_files:
+    - "external_vars.yml"
+
+  vars_prompt:
+    - name: "Version"
+      prompt: "Which version Do you want to install?"
+      private: false
+
+  tasks:
+  - name: include default step variables
+    include_vars: task_var.yml
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname }}" 
+  - name: Value of Version
+    debug:
+      msg: "{{ Version }}" 
+
+-------------------------------------  
+=====
+Ansible variables through register
+=====
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshInPlaybook
+    package: "httpd"
+    service: "httpd"
+
+  vars_files:
+    - "external_vars.yml"
+
+  vars_prompt:
+    - name: "Version"
+      prompt: "Which version Do you want to install?"
+      private: false
+
+  tasks:
+  - name: Change file ownership, group and permissions
+    file:
+      path: /tmp/abc.txt
+      state: touch
+  - name: include default step variables
+    include_vars: task_var.yml
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname }}" 
+  - name: Value of Version
+    debug:
+      msg: "{{ Version }}"
+  - name: Ansible register with_items example
+    shell: "find *.txt"
+    args:
+      chdir: "/tmp"
+    register: with_output
+  - debug:
+      var: with_output
+  - debug:
+      var: with_output.stdout
+=======================================================================
+=======================================================================
+Variables in Inventory
+=======================================================================
+- vars in inventory @ host level
+----------------------------------
+[web]
+13.233.149.198 myname1=rajesh@host
+13.234.114.107
+
+- vars in inventory @ group level
+---------------------------------------
+[web]
+13.233.149.198
+13.234.114.107
+
+[web:vars]
+ansible_ssh_private_key_file=node.pem
+ansible_become=yes
+ansible_user=centos
+myname1=rajesh@host
+
+
+
+
+- vars in inventory @ group of group level
+--------------------------------------------------
+- vars in inventory using group_vars directory?
+		contain file == mATCHING with groupname of the inventory == yaml Format
+
+- vars in inventory using host_vars directory?
+--------------------------------------------------
+		contain file == mATCHING with hostname of the inventory == yaml Format
+
+[web]
+13.233.149.198
+13.234.114.107
+
+[web:vars]
+ansible_ssh_private_key_file=node.pem
+ansible_become=yes
+ansible_user=centos
+myname1=rajesh@host
+
+
+├── group_vars
+│   ├── all
+│   └── web
+├── host_vars
+│   └── 13.233.149.198
+
+===========================================================================
+Vars in Command Line
+=========================================
+Conditioning in Ansible?
+===========================================================================
+IF 
+	TRUE
+		DO THIS
+else
+		DO THIS
+============================================================================
+YAML === NO IF and ELSE.
+	WE have "WHEN"
+			with vars.
+=============================================================================
+FACT Vars
+	this var is set during runtime and constant vars.
+	setup module
+		tool called "facter" used by Ansible and Puppet to get system info.
+		chef uses oHIA for getting system info
+		
+  475  ansible localhost -m setup | grep -i os
+  476  ansible localhost -m setup
+https://www.devopsschool.com/tutorial/ansible/ansible-conditional-programming-playbooks.html
+
+
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  tasks:
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+	
+Looping in Ansible
+=====================================================================
+for i=1;1>20
+	do this
+done
+=======================================================
+https://www.devopsschool.com/tutorial/ansible/ansible-looping-programming-playbooks.html
+
+
+- name: Install common software requirements
+  apt: pkg={{ item }} state=installed
+  with_items:
+     - git
+     - htop
+     - vim
+ 
+---
+- name: webserver setup     
+  hosts: web
+ 
+  tasks:
+    - name: Install the latest version of Apache
+      yum: name={{ item }} state=installed    
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - httpd
+        - vim
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+Template in Ansible?
+===============================================
+
+---
+- name: webserver setup     
+  hosts: web
+
+  vars:
+    myname: rajeshInPlaybook
+    age: 25
+  tasks:
+    - name: Install the latest version of Apache
+      yum: name={{ item }} state=installed    
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - httpd
+        - vim
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy Site Files
+      template: src=index.html.j2 dest=/var/www/html/index.html
+
+
+https://www.devopsschool.com/tutorial/ansible/ansible-playbook-template.html
+
+Module - template
+Rule - filename MUST be ennding with this ext .j2
+	& use template module
+	
+Handlers in Ansible?
+------------------------------
+Handlers is a section which contains Group of Tasks
+		BUT
+		execute only when calling task has change true
+
+https://www.devopsschool.com/blog/calling-ansible-handlers-based-on-os-distributions/
+
+QA
+
+---
+- name: webserver setup     
+  hosts: web
+
+  vars:
+    myname: rajeshInPlaybook
+    age: 25
+    port: 8080
+
+  tasks:
+    - name: Install the latest version of Apache
+      yum: name={{ item }} state=installed    
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - httpd
+        - vim
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Static Content
+      template: src=index.html.j2 dest=/var/www/html/index.html
+    - name: Copy httpd.conf file
+      template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+      notify:
+      - Restart httpd 2
+
+  handlers:
+    - name: Restart httpd 2
+      service:
+        name: httpd
+        state: restarted
+    - name: Restart httpd 1
+      service:
+        name: httpd
+        state: restarted
+
+Some changes in APP - Required RESTART
+Some changes in APP - DO NOT Required RESTART
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
