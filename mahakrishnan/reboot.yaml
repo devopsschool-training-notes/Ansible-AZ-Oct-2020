@@ -1,0 +1,8 @@
+---
+- name: reboot a self machine
+  hosts: web
+ 
+  tasks:
+    - name: reboot a self machine
+      reboot:
+        msg: "Reboot initated by maha"

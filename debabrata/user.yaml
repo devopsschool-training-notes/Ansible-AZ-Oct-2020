@@ -1,0 +1,10 @@
+---
+- name: reating user
+  hosts: web
+
+  tasks:
+    - name: create deploy1-user  called Deploy"
+      user:
+        name: deploy1-user
+        state: present 
+

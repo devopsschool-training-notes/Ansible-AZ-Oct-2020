@@ -1,0 +1,8 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: start the service httpd
+      service:
+        name: httpd
+        state: started

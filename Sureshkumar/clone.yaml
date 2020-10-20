@@ -1,0 +1,12 @@
+---
+- name: Assignment 2
+  hosts: web
+
+  tasks:
+    - name: clone git folder
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template
+        clone: yes
+        dest: /home/centos/Sureshkumar
+
+...

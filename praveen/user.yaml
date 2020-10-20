@@ -1,0 +1,10 @@
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: create user
+      user:
+        name: deploy-user
+        groups: deploy
+        state: present
+

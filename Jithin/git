@@ -1,0 +1,8 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: Install git
+      yum:
+        name: git
+        state: present 

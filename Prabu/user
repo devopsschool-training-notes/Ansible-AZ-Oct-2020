@@ -1,0 +1,9 @@
+---
+- name: Assignment2
+  hosts: web
+  
+  tasks:
+    - name: Creating user in the existing group
+      user:
+        name: deploy-user
+        group: deploy

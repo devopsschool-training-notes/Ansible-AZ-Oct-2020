@@ -1,0 +1,8 @@
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: Install the latest version of Apache
+      group:
+        name: deploy
+        state: present

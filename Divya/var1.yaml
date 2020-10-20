@@ -1,0 +1,15 @@
+---
+- name: This sets up an httpd webserver
+  hosts: localhost
+  vars:
+    name: playbookvar
+    package: "httpd"
+    service: "httpd"
+
+  tasks:
+  - name: Install the httpd apps
+    yum: name={{ package }}  state=present
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - debug:
+      msg: My Name is {{ name }} 

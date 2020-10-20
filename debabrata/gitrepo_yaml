@@ -1,0 +1,11 @@
+---
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: copy git repo"
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template 
+        clone: yes 
+        dest: /home/centos/debabrata/
+

@@ -1,0 +1,39 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: Create a Group
+      group:
+        name: deploy
+        state: present
+    - name: Create a user
+      user:
+        name: deploy-user
+        group: deploy
+        shell: /bin/bash
+        state: present
+    - name: Install apache
+      yum:
+        name: httpd
+        state: present
+    - name: start the service httpd
+      service:
+        name: httpd
+        state: started
+    - name: Install wget
+      yum:
+        name: wget
+        state: present          
+    - name: Install git
+      yum:
+        name: git
+        state: present    
+    - name: clone git folder
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template
+        clone: yes
+        dest:  /home/centos/Jithin   
+    - name: copy a file
+      copy: 
+        src: index.html
+        dest: /var/www/html/index.html

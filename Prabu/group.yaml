@@ -1,0 +1,9 @@
+---
+- name: Group addition
+  hosts: web
+  
+  tasks:
+    -name: Adding the group to the remote server
+     group:
+      name: deploy
+      state: present

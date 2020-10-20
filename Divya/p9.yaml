@@ -1,0 +1,20 @@
+- name: Ansible Playbook Assignment 2
+  hosts: web
+  tasks:
+  - name: create a group called deploy
+    group: name=deploy state=present
+  - name: user creation
+    user: name=deploy-user groups=deploy
+  - name: Install httpd
+    yum: name=httpd state=present
+  - name: start  httpd service
+    service: name=httpd state=started
+  - name: create a file index.html
+    copy: dest=/var/www/html src="index.html"
+  - name: Reboot Self Machine
+    reboot:
+  - name: Install git and wget
+    yum: name=git,wget state=present
+  - name: git clone
+    git: repo=https://github.com/scmgalaxy/ansible-role-template dest=/home/centos/divyagit
+

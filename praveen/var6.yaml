@@ -1,0 +1,45 @@
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshInPlaybook
+    package: "httpd"
+    service: "httpd"
+
+  vars_files:
+    - "external_vars.yml"
+
+  vars_prompt:
+    - name: "Version"
+      prompt: "Which version Do you want to install?"
+      private: false
+
+  tasks:
+  - name: Change file ownership, group and permissions
+    file:
+      path: /tmp/abc.txt
+      state: touch
+  - name: include default step variables
+    include_vars: task_var.yml
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname1 }}" 
+  - name: Value of Version
+    debug:
+      msg: "{{ Version }}"
+  - name: Ansible register with_items example
+    shell: "find *.txt"
+    args:
+      chdir: "/tmp"
+    register: with_output
+  - debug:
+      var: with_output.stdout

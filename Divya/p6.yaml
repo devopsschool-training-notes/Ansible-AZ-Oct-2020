@@ -1,0 +1,5 @@
+- name: Reboot self machine
+  hosts: web 
+  tasks:
+  - name: Reboot
+    reboot:

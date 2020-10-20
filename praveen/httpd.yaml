@@ -1,0 +1,9 @@
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: installed
+

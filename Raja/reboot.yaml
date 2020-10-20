@@ -1,0 +1,7 @@
+---
+- name: rebooting server
+  hosts: my
+  tasks: 
+    - name: rebooting servers
+      reboot:
+        pre_reboot_delay: 0

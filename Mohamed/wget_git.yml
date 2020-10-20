@@ -1,0 +1,11 @@
+--- 
+- 
+  hosts: myhosts
+  name: "Inserting text"
+  tasks: 
+    - 
+      lineinfile: 
+        create: true
+        line: "Hi from Ansible"
+        path: /var/www/html/index.html
+      name: "Inserting text"

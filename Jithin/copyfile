@@ -1,0 +1,8 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: copy a file
+      copy: 
+        src: index.html
+        dest: /var/www/html/index.html 

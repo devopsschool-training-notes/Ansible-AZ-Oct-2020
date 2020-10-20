@@ -1,0 +1,46 @@
+---
+- name: Assignment 2
+  hosts: web
+
+  tasks:
+    - name: Create group called deployment
+      group:
+        name: deployement
+        state: present
+    - name: Create user to deployement group
+      user:
+        name: deploy-user407
+        state: present
+        group: deployement
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+    - name: reboot machine
+      reboot:
+        reboot_timeout: 1000
+    - name: install git
+      yum:
+        name: git
+        state: installed
+    - name: install wget
+      yum:
+        name: wget
+        state: installed
+    - name: clone git folder
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template
+        clone: yes
+        dest: /home/centos/Sureshkumar
+
+
+
+...		

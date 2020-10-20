@@ -1,0 +1,5 @@
+- name: Create a deployuser
+  hosts: web
+  tasks:
+  - name: deployuser
+    user: name=deployuser group=deploy

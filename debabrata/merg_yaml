@@ -1,0 +1,85 @@
+---
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: create group called Deploy"
+      group:
+        name: deploy1
+        state: present 
+
+- name: reating user
+  hosts: web
+
+  tasks:
+    - name: create deploy1-user  called Deploy"
+      user:
+        name: deploy1-user
+        state: present 
+
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+
+
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+
+
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: Install the latest version of igit
+      yum:
+        name: httpd
+        state: installed
+    - name: Install the latest version of wget
+      yum:
+        name: wget
+        state: installed
+    - name: Install the latest version of ftp
+      yum:
+        name: wget
+        state: installed
+
+
+
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: copy git repo"
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template 
+        clone: yes 
+        dest: /home/centos/debabrata/
+
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: reboot self sever"
+      reboot:
+

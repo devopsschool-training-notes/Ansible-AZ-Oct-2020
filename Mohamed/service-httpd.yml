@@ -1,0 +1,11 @@
+--- 
+- 
+  hosts: myhosts
+  name: "Enabling Service"
+  tasks: 
+    - 
+      name: "Enabling HTTPD service"
+      service: 
+        name: httpd
+        state: started
+

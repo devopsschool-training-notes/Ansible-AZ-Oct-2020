@@ -1,0 +1,9 @@
+---
+- name: Assignment4
+  hosts: web
+  
+  tasks:
+    - name: Starting httpd package
+      service:
+       name: httpd
+       state: started

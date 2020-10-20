@@ -1,0 +1,24 @@
+---
+- name: webserver setup     
+  hosts: web
+ 
+  vars:
+    myname: rajeshInPlaybook
+    package: "httpd"
+    service: "httpd"
+
+  vars_files:
+    - "external_vars.yml"
+
+  tasks:
+  - name: Install the httpd apps
+    yum: name={{ package }}
+  - name: start the httpd service
+    service: name={{ service }} state=started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ myname }}" 

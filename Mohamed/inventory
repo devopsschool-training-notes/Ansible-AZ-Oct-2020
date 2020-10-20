@@ -1,0 +1,2 @@
+[myhosts]
+65.0.95.63 ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes

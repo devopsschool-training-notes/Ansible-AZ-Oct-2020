@@ -3,11 +3,10 @@
 13.233.233.204	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
 
 [web]
-13.233.149.198
-13.234.114.107
+13.235.31.152
+13.233.173.249
 
 [web:vars]
 ansible_ssh_private_key_file=node.pem 
 ansible_become=yes
 ansible_user=centos
-myname1=rajesh@host

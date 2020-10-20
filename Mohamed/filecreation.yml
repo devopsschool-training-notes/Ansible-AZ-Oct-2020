@@ -1,0 +1,11 @@
+--- 
+- 
+  hosts: myhosts
+  name: "Create file"
+  tasks: 
+    - 
+      file: 
+        name: index.html
+        path: /var/www/html
+        state: touch
+      name: "create index.html file"

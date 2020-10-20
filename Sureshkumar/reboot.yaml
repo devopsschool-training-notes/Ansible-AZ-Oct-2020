@@ -1,0 +1,9 @@
+---
+- name: Assignment 2
+  hosts: web
+
+  tasks:
+    - name: reboot machine
+      reboot:
+        reboot_timeout: 1000	  
+

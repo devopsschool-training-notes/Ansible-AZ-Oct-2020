@@ -1,0 +1,9 @@
+---
+- name: webserver setup     
+  hosts: web
+ 
+  tasks:
+    - name: group creation
+      group:
+        name: deploy
+        state: present

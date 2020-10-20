@@ -1,0 +1,11 @@
+---
+- name: Deploy user & group creation
+  hosts: my
+  
+  
+  tasks:
+    - name: creating user and group
+      user:
+        name: deploy-user
+        group: deploy
+        shell: /bin/bash

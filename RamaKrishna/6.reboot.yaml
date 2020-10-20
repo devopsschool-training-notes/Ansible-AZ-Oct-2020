@@ -1,0 +1,8 @@
+---
+- name: webserver setup
+  hosts: web
+  tasks:
+    - name: Reboot the server
+      reboot:
+
+

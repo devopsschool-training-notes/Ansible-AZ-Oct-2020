@@ -1,0 +1,11 @@
+---
+- name: create deploy-user
+  hosts: web
+
+  tasks:
+    - name: create a user called “deploy-user” which is part of group called “deploy”
+      user:
+        name: deploy-user
+        groups: deploy
+        state: present
+        shell: /bin/bash

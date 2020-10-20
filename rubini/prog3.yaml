@@ -1,0 +1,8 @@
+---
+- name: program3
+  hosts: web
+  tasks:
+  - name: httpd service
+    yum: name=httpd state=present
+  - name: starting the httpd server
+    service: name=httpd state=started

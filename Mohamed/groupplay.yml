@@ -1,0 +1,9 @@
+---
+- name: Group creation
+  hosts: localhost
+  tasks:
+    - name: group creation
+      group:
+        name: deploy
+        state: present
+        gid: 100

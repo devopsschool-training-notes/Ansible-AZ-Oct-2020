@@ -1,0 +1,9 @@
+---
+- name: install a package called “git”, “wget”.
+  hosts: web
+ 
+  tasks:
+    - name: Installing “git” & “wget”.
+      yum:
+        name: git,wget
+        state: installed

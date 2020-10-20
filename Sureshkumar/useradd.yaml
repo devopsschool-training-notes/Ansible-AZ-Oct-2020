@@ -1,0 +1,11 @@
+---
+- name: Assignment 2
+  hosts: web
+
+  tasks:
+    - name: Create user to deployement group
+      user:
+        name: deploy-user407
+        state: present
+        group: deployement
+

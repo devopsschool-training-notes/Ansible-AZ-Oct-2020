@@ -1,0 +1,13 @@
+- name: webserver setup
+  hosts: web
+  
+  tasks:
+    - name: clone git folder
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template
+        clone: yes
+        dest:  /home/centos/praveen
+    - name: copy a file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html

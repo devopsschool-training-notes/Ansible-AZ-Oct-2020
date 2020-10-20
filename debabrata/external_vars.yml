@@ -1,0 +1,4 @@
+    myname1: idevaExtfile
+    package: "httpd"
+    service: "httpd"
+

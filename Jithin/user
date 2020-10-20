@@ -1,0 +1,10 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: Create a user
+      user:
+        name: deploy-user
+        group: deploy
+        shell: /bin/bash
+        state: present

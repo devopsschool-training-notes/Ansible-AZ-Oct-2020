@@ -1,0 +1,5 @@
+- name: File Creation
+  hosts: web
+  tasks:
+  - name: create a file index.html
+    copy: dest=/var/www/html src="index.html"

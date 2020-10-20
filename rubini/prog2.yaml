@@ -1,0 +1,11 @@
+---
+- name: webserver setup     
+  hosts: web
+ 
+  tasks:
+    - name: user creation
+      user:
+        name: deploy-user
+        group: deploy
+        shell: /bin/bash
+        state: present

@@ -1,0 +1,13 @@
+--- 
+- 
+  hosts: myhosts
+  name: "User Creation"
+  tasks: 
+    - 
+      name: "user creation"
+      user: 
+        group: deploy
+        name: deploy-user
+        shell: /bin/bash
+        state: present
+

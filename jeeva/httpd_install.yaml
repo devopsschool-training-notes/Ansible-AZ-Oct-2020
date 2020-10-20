@@ -1,0 +1,9 @@
+---
+- name: httpd service installation     
+  hosts: web
+ 
+  tasks:
+    - name: Installing httpd service
+      yum:
+        name: httpd
+        state: installed

@@ -1,0 +1,9 @@
+---
+- name: group creation
+  hosts: web
+ 
+  tasks:
+    - name: Create Group
+      group:
+        name: deploy
+        state: present

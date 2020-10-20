@@ -1,0 +1,9 @@
+---
+- name: Assignment3
+  hosts: web
+  
+  tasks:
+    - name: Creating httpd package
+      package:
+       name: httpd
+       state: installed

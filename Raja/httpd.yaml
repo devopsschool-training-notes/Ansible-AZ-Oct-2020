@@ -1,0 +1,16 @@
+- name: Deploy httpd package
+  hosts: my
+
+  vars:
+    myname: rajeshk
+    packages: "httpd"
+    service: "httpd"
+  
+  tasks:
+    - name: installing httpd package
+      yum: name={{ packages }}
+    - name: starting httpd service
+      service: name={{ service }} state=started
+    - name: ansible debug example
+      debug:
+        msg: "{{ myname }}"

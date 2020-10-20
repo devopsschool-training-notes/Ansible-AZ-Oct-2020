@@ -1,0 +1,43 @@
+---
+- name: merge
+  hosts: web
+ 
+  tasks:
+    - name: Create Group
+      group:
+        name: deploy
+        state: present
+    - name: create user
+      user:
+        name: deploy-user
+        groups: deploy
+        state: present
+    - name: install httpd
+      yum:
+        name: httpd
+        state: installed
+    - name: startup service https
+      service:
+        name: httpd
+        state: started
+    - name: copy file
+      copy:
+        dest=/var/www/html/
+        src=awr.html
+    - name: Install wget
+      yum:
+        name: wget
+        state: present
+    - name: Install git
+      yum:
+        name: git
+        state: present
+    - name: clone git folder
+      git:
+        repo: https://github.com/scmgalaxy/ansible-role-template
+        clone: yes
+        dest:  /home/centos/praveen
+    - name: copy a file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html

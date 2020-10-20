@@ -1,0 +1,13 @@
+---
+- name: installing multipackages
+  hosts: my
+  
+  tasks:
+    - name: installing multipackages
+      yum: 
+        name: "{{ packages }} "
+        state: installed
+      vars:
+        packages:
+        - git
+        - wget

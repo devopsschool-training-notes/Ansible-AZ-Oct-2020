@@ -1,0 +1,7 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: Reboot the server
+      reboot:
+

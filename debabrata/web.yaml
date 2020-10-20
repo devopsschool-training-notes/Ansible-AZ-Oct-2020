@@ -1,0 +1,10 @@
+---
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - name: create group called Deploy"
+      grou:
+        name: deploy1
+        state: present 
+

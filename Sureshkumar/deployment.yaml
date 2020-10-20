@@ -1,0 +1,10 @@
+---
+- name: Assignment 2
+  hosts: web
+
+  tasks:
+    - name: Create group called deployment
+      group:
+        name: deployement
+        state: present
+...
