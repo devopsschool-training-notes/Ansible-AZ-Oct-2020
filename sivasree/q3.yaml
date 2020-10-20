@@ -1,0 +1,25 @@
+---
+- name: Playbook to create apache
+  hosts: web
+ 
+  tasks:
+    - name: Latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+    - name: Start a service
+      service:
+        name: httpd
+        state: started
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        mod: 600
+        dest: /var/www/html/index.html
+    - name: adding contents to indexfile
+      blockinfile:
+        dest: /var/www/html/index.html
+        block: |
+          <html>
+          <h1> Welcome Sivasree </h1>
+          </html>

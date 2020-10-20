@@ -1,0 +1,19 @@
+---
+- name: Question5
+  hosts: web
+  tasks:
+  - name: create index file
+    file:
+      path: /var/www/html/index.html
+      mode: 644
+      state: touch
+
+ 
+
+  - name: add some contents in index file
+    blockinfile:
+      dest: /var/www/html/index.html
+      block: |
+        <html>
+        <h1> Heillo World </h1>
+        </html>

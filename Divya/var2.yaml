@@ -1,3 +1,4 @@
+
 ---
 - name: This sets up an httpd webserver
   hosts: web
@@ -5,6 +6,9 @@
     name: playbookvar
     package: "httpd"
     service: "httpd"
+ 
+  vars_files:
+    - "external_vars.yml"
 
   tasks:
   - name: Install the httpd apps
@@ -12,4 +16,5 @@
   - name: start the httpd service
     service: name={{ service }} state=started
   - debug:
-      msg: My Name is {{ name }} 
+      msg: My Name is {{ name }}
+

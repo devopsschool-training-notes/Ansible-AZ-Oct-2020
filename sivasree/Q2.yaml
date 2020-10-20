@@ -1,0 +1,6 @@
+- name: Creating deploy user and group
+  hosts: web
+  tasks:
+  - name: Add user "deploy-user"
+    user: name=deploy-user groups=deploy password="" shell=/bin/bash append=yes  state=present
+    become: true

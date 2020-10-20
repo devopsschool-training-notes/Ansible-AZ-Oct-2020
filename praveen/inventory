@@ -1,13 +1,12 @@
 [my]
-65.0.76.155	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
-13.233.233.204	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
+12.233.179.97	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
+#13.233.233.204	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
 
 [web]
-13.233.149.198 
-13.234.114.107
-
+13.233.179.97	
+#13.233.233.204	
 
 [web:vars]
-ansible_ssh_private_key_file=nodej.pem 
+ansible_ssh_private_key_file=node.pem 
 ansible_become=yes
 ansible_user=centos

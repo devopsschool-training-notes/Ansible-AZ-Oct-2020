@@ -1,4 +1,3 @@
----
 - name: This sets up an httpd webserver
   hosts: web
   vars:
@@ -6,10 +5,17 @@
     package: "httpd"
     service: "httpd"
 
+  vars_files:
+    - "external_vars.yml"
+
   tasks:
+  - name: include default step variables
+    include_vars: task_var.yml
   - name: Install the httpd apps
     yum: name={{ package }}  state=present
   - name: start the httpd service
     service: name={{ service }} state=started
   - debug:
-      msg: My Name is {{ name }} 
+      msg: My Name is {{ name }}
+
+

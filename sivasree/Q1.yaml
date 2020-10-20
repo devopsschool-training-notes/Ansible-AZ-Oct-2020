@@ -1,0 +1,9 @@
+---
+- name: Playbook to create group     
+  hosts: web
+ 
+  tasks:
+    - name: Create a group deploy
+      group:
+        name: deploy
+        state: present

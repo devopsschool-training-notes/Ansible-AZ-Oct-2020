@@ -1,0 +1,28 @@
+---
+- name: webserver setup     
+  hosts: web
+
+  vars:
+    myname: rajeshInPlaybook
+    age: 25
+    port: 8080
+
+  tasks:
+    - name: Install the latest version of Apache
+      yum: name={{ item }} state=installed    
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - httpd
+        - vim
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy httpd.conf file
+      template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
