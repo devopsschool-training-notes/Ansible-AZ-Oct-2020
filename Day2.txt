@@ -1,0 +1,78 @@
+ACS - 35.154.8.41
+--------------------------------------------------------------
+ansible web -i inventory -m yum -a "name=httpd state=installed" 
+ansible web -i inventory -m copy -a "dest=/var/www/html/index.html src=index.html" 
+ansible web -i inventory -m service -a "name=httpd state=started" 
+---------------------------------------------------------------
+[my]
+65.0.76.155	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
+13.233.233.204	ansible_user=centos ansible_ssh_private_key_file=node.pem ansible_become=yes
+
+[web]
+65.0.131.136	
+13.233.233.204	
+
+[web:vars]
+ansible_ssh_private_key_file=node.pem 
+ansible_become=yes
+ansible_user=centos
+================================================
+Skelaton of Playbook
+=========================
+https://www.devopsschool.com/blog/anatomy-of-ansible-play-defined/
+
+---
+- name: webserver setup     
+  hosts: web
+ 
+  tasks:
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+   
+
+   71  ansible-playbook --syntax-check web.yaml
+   72  ansible-playbook -i inventory web.yaml -C
+   73  ansible-playbook -i inventory web.yaml
+
+========================ARS=============================
+Anugu Divya	13.232.32.122
+S. Leebon	13.233.173.249
+Maha krishnan S	13.235.42.137
+Praveen Kumar Pethuraj	13.233.179.97
+Sivasree Balakrishnan	13.233.252.61
+Rubini Udayashankar	13.127.190.67
+Prabu Chandran	13.126.103.145
+RamaKrishna Pasupuleti	35.154.32.17
+JITHIN P JOSEPH	65.0.92.131
+Debabrata Sahu	13.234.17.172
+rajesh shankar 	65.0.131.136
+Raja Somasundaram	52.66.10.226
+Jeevanandan Krishna Kumar	13.235.31.152
+Anand.M	13.234.20.214
+Sarvanan.Bha	13.233.71.20
+Navin Nandakumar	13.126.109.227
+Thaiko Selvaraj	13.234.204.173
+Mohamed Yousuff Kajah	65.0.95.63
+Sureshkumar Rajendran	13.234.18.184
+Priya M	13.233.97.114
+	13.233.94.11
+
+
+Assignment 
+https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-2/
+
+
+
+
+
+
