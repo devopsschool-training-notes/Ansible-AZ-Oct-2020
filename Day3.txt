@@ -1,0 +1,98 @@
+ACS
+13.127.250.5
+=========ARS=================
+Anugu Divya	13.233.21.212
+S. Leebon	13.234.18.163
+Maha krishnan S	13.233.197.79
+Praveen Kumar Pethuraj	65.0.94.159
+Sivasree Balakrishnan	15.206.122.213
+Rubini Udayashankar	13.233.43.219
+Prabu Chandran	13.232.228.180
+RamaKrishna Pasupuleti	3.6.93.173
+JITHIN P JOSEPH	13.234.18.97
+Debabrata Sahu	13.126.124.216
+rajesh shankar 	15.206.158.210
+Raja Somasundaram	13.234.122.185
+Jeevanandan Krishna Kumar	15.206.124.50
+Anand.M	13.232.249.9
+Sarvanan.Bha	13.233.216.162
+Navin Nandakumar	13.232.101.61
+Thaiko Selvaraj	13.235.134.1
+Mohamed Yousuff Kajah	13.232.188.201
+Sureshkumar Rajendran	13.127.127.41
+Priya M	65.0.74.159
+====================================
+Lab and Assignment
+https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-3/
+
+
+================Managmenet PRB===============
+Inventory
+	CMD
+	FILE
+	DIRECTOIRY
+	SCRIPT
+VARS in Inventory
+	Inventory at host
+	Inventory at group
+	Inventory at Gropup of Group
+	Inventory at group_vars
+	Inventory at host_vars
+Tasks
+	Adhoc
+	Playbook
+	What about multiple Playbook??????????
+
+Vars in Playbook?
+	In Playbook
+	IN playbook ext file
+	In Playbook @task level
+	In playbook prompt
+	in Playbook Register
+
+Vars in COMMAND LINE
+
+============================================
+How to manage tasks in multiple yaml file?
+	      ------
+How to manage multiple playbook?
+============================================
+https://www.devopsschool.com/blog/ansible-include-scnario-with-list-of-plays-or-tasks/
+
+------main.yaml------------
+- hosts: localhost
+  tasks:
+    - debug:
+        msg: task1
+ 
+    - name: Include task list in play
+      include: stuff.yaml
+ 
+------stuff.yaml------------
+---
+- name: http service state
+  service: name=httpd state=started enabled=yes
+
+
+--------main1.yaml--------------
+- hosts: localhost
+  tasks:
+    - debug:
+        msg: task1
+
+- include: stuff1.yaml
+ 
+ 
+------stuff1.yaml------------
+---
+- hosts: localhost
+  tasks:
+    - debug:
+        msg: task1
+    - name: http service state
+      service: name=httpd state=started enabled=yes
+
+
+====================================
+Lab and Assignment
+https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-3/
