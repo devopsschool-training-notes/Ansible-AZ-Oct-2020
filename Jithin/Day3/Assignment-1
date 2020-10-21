@@ -1,0 +1,22 @@
+- name: Assignment     
+  hosts: web
+ 
+  tasks:
+    - name: install apache
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+    - name: install apache in ubuntu
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "ubuntu"
+          
+    - name: list the directory
+      shell: "ls"
+      args:
+        chdir: "/etc"
+      register: with_output
+    - debug:
+        msg: files/directory inside /etc are "{{ with_output.stdout_lines }}"

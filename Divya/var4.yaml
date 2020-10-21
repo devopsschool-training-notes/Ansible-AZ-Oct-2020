@@ -1,14 +1,15 @@
 ---
-- name: This sets up an httpd webserver
+- name: webserver setup     
   hosts: web
+ 
   vars:
-    name: playbookvar
+    name: am@playbookvar
     package: "httpd"
     service: "httpd"
 
   vars_files:
     - "external_vars.yml"
-	
+
   vars_prompt:
     - name: "Version"
       prompt: "Which version Do you want to install?"
@@ -18,11 +19,12 @@
   - name: include default step variables
     include_vars: task_var.yml
   - name: Install the httpd apps
-    yum: name={{ package }}  state=present
+    yum: name={{ package }}
   - name: start the httpd service
     service: name={{ service }} state=started
-  - debug:
-      msg: My Name is {{ name }}
-  - debug:
-      msg: My version {{ Version }}
-
+  - name: Ansible debug example.
+    debug:
+      msg: "{{ name }}" 
+  - name: Value of Version
+    debug:
+      msg: "{{ Version }}" 

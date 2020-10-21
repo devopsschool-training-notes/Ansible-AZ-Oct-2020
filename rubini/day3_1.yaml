@@ -1,0 +1,20 @@
+---
+- name: webserver setup     
+  hosts: web
+  vars:
+    myname: Program1_Day3
+
+  tasks:
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Ansible debug example.
+      debug:
+        msg: "{{ myname }}"

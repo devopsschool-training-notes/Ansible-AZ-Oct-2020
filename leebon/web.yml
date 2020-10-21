@@ -3,10 +3,19 @@
   hosts: web
  
   tasks:
-    - name: Install the latest version of Apache
+    - name: Install the latest version of Apache in CentOS
       yum:
         name: httpd
         state: installed
+      when: ansible_distribution == "CentOS"
+    - name: Install the latest version of Apache in UBUNTU
+      apt:
+        name: httpd
+        state: installed
+      when: ansible_distribution == "Ubuntu"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
     - name: Start service httpd, if not started
       service:
         name: httpd
@@ -15,4 +24,3 @@
       copy:
         src: index.html
         dest: /var/www/html/index.html
-

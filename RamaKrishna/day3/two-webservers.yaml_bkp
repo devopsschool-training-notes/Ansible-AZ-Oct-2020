@@ -1,0 +1,22 @@
+- name: install webserver in Redhat & ubuntu
+  hosts: web
+
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: present
+        when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    - name: install apache in ubuntu
+      apt:
+        name: apache2
+        state: present
+        when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    - name: list the files in directory
+      shell: "ls"
+        args:
+          chdir:"/etc"
+        register: with_output
+    - debug:
+        var: with_output

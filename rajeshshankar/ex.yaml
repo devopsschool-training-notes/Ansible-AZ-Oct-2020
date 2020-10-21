@@ -1,0 +1,27 @@
+--- 
+- 
+  hosts: web
+  name: "Webserver deployment in two different OS type"
+  tasks: 
+    - 
+      name: "installing httpd in Redhat servers"
+      when: "ansible_os_family == \"RedHat\""
+      yum: 
+        name: httpd
+        state: present
+    - 
+      apt: 
+        name: apache2
+        state: present
+      name: "install apache in Ubuntu servers"
+      when: "ansible_os_family == \"ubuntu\""
+    - 
+      args: 
+        chdir: /etc
+      name: "list the files in /etc directory"
+      register: with_output
+      shell: "ls -ltr"
+    - 
+      debug: 
+        var: with_output
+

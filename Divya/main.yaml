@@ -1,0 +1,11 @@
+- name: Assignment3
+  hosts: web
+  tasks:
+  - debug:
+      msg: calling secondyaml
+  - debug:
+      msg: calling thirdyaml
+
+- include: second.yaml
+
+- include: third.yaml

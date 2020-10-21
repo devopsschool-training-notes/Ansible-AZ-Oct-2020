@@ -1,7 +1,5 @@
 [web]
-#13.127.190.67
-13.233.149.198
-13.234.114.107
+13.233.43.219
 
 [web:vars]
 ansible_ssh_private_key_file=node.pem

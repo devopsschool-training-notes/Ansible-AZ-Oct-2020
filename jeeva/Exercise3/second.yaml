@@ -1,0 +1,9 @@
+- name: secondyaml
+  hosts: 13.233.21.212
+  
+  tasks:
+    - debug:
+        msg: calling from web2
+    - name: start httpd on web2
+      service: name=httpd state=started enabled=yes
+  

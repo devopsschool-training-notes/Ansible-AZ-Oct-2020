@@ -1,0 +1,8 @@
+- name: thirdyaml
+  hosts: 13.234.18.163
+  
+  tasks:
+    - debug:
+        msg: calling from web1
+    - name: start httpd on web1
+      service: name=httpd state=started enabled=yes

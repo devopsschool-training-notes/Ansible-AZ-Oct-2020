@@ -1,0 +1,32 @@
+---
+- name: Installing webserver
+  hosts: localhost
+
+#  vars:
+#    name: 'maha'
+
+
+  tasks:
+    - name: Install httpd
+      when: ansible_os_family == "RedHat" 
+      yum:
+        name: httpd
+        state: installed 
+
+    - name: Starting httpd
+      when: ansible_os_family == "RedHat" 
+      service:
+        name: httpd
+        state: restarted
+
+    - name: getting files inside /etc
+      command: "ls /etc/" 
+      register: dir_out 
+
+    - debug:
+        msg: This is a directory "{{ name }}" in /etc 
+      with _items: dir_out
+
+#    - debug: 
+#        msg: This is a directory "{{ item }}" in /etc
+#      with _items: "{{ dir_out }}" .stdout_lines

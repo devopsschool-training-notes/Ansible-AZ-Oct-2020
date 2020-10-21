@@ -1,0 +1,22 @@
+---
+- name: This is all exercise in one playbook
+  hosts: web
+  tasks:
+  - name: Create a Group
+    group: name=deploy
+  - name: Create a User and assign to Group
+    user: name=deploy-user group=deploy shell=/bin/bash state=present
+  - name: Install the httpd apps
+    yum: name=httpd
+  - name: start the httpd service
+    service: name=httpd state=started
+  - name: Copy HTML Content to a file
+    copy: dest=/var/www/html/index.html content='<html><h1>Welcome to HPE</h1></html>'
+  - name: Install GIT
+    yum: name=git state=present
+  - name: Install WGET
+    yum: name=wget state=present
+  - name: Command to clone git repo
+    git: repo=https://github.com/scmgalaxy/ansible-role-template clone=yes dest=/tmp/test
+  - name: Command to reboot a machine.
+    reboot:

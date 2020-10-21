@@ -1,0 +1,25 @@
+--- 
+- 
+  hosts: localhost
+  name: "Installing webserver"
+  tasks: 
+    - 
+      name: "Install httpd"
+      when: "ansible_os_family == \"RedHat\""
+      yum: 
+        name: httpd
+        state: installed
+    - 
+      name: "Starting httpd"
+      when: "ansible_os_family == \"RedHat\""
+      yum: 
+        name: httpd
+        state: restarted
+    - 
+      command: "ls /etc/"
+      name: "getting files inside /etc"
+      register: dir_out
+    - 
+      debug: 
+        msg: "This is a directory \"{{item }}\" in /etc"
+        var: dir_out

@@ -1,0 +1,25 @@
+------main.yaml------
+---
+- hosts: localhost
+  tasks:
+    - debug:
+        msg: task1
+
+- include: second.yaml
+- include: third.yaml
+
+------second.yaml------------
+---  
+- hosts: localhost
+  tasks:
+    - debug:
+        msg: task2
+    - name: http service state
+      service: name=httpd state=started enabled=yes
+
+------third.yaml------------
+---
+- hosts: localhost
+  tasks:
+    - debug:
+        msg: task3

@@ -1,0 +1,23 @@
+  - 
+    when: "ansible_os_family == \"RedHat\""
+    yum: 
+      name: httpd
+      state: present
+  -
+    apt: 
+      name: apache2
+      state: present
+    name: "install apache in ubuntu"
+    when: "ansible_os_family == \"ubuntu\""
+  - 
+    args: 
+      chdir: /etc
+    name: "list the directory"
+    register: with_output
+    shell: "ls"
+  - 
+    debug: 
+      msg: "{{item}}"
+      with_items: 
+        - "{{ with_output }}"
+

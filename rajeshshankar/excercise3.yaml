@@ -1,0 +1,36 @@
+--- 
+- 
+  hosts: web
+  name: "webserver setup"
+  tasks: 
+    - 
+      name: "Install the latest version of Apache"
+      when: "ansible_os_family == \"RedHat\""
+      yum: 
+        name: httpd
+        state: installed
+    - 
+      name: "Install the latest version of Apache"
+      when: "ansible_os_family == \"ubuntu\""
+      yum: 
+        name: apache2
+        state: installed
+    - 
+      apt: 
+        name: apache2
+        state: installed
+      name: "Install the latest version of Apache"
+    - 
+      name: "Start service httpd, if not started"
+      service: 
+        name: httpd
+        state: started
+    - 
+      copy: 
+        dest: /var/www/html/index.html
+        src: index.html
+      name: "Copy file with owner and permissions"
+    - 
+      command: "ls /etc/"
+      name: "getting files inside /etc"
+      register: dir_out

@@ -1,0 +1,39 @@
+---
+- name: webserver setup     
+  hosts: web
+ 
+  tasks:
+    - name: Install the latest version of Apache in CentOS
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_distribution == "CentOS"
+
+    - name: Install the latest version of Apache in UBUNTU
+      apt:
+        name: httpd
+        state: installed
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+    - name: List the files in /etc
+      shell: "ls /etc"
+      register: ls_output 
+
+    - debug:
+        msg: FILES/DIRS INSIDE /etc ARE "{{ item }}"
+      with_items: 
+        - "{{ ls_output.stdout }}"

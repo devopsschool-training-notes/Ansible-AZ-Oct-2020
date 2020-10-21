@@ -1,0 +1,10 @@
+--- 
+- 
+  hosts: localhost 
+  name: "installing web services"
+  tasks: 
+    - name: "Install latest version of redhat"
+      yum: 
+        name: ftp 
+        state: installed
+        when: ansible_os_family == "RedHat"
