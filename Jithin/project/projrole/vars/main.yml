@@ -1,0 +1,7 @@
+---
+# vars file for projrole
+package: httpd
+myname: Jihtin
+age: 28
+port: 8080
+OSNAME: RedHat

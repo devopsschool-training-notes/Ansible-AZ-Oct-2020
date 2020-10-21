@@ -1,0 +1,2 @@
+ - name: Copy Site Files
+   template: src=index.html.j2 dest=/home/centos/Ansible-AZ-Oct-2020/Anand/roles/project1/files/index.html

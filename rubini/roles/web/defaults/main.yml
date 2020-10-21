@@ -1,0 +1,7 @@
+---
+# defaults file for web
+
+service: apache
+myname: raju
+age: 19
+port: 80

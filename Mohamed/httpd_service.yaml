@@ -1,0 +1,10 @@
+---
+- name: httpd service installation     
+  hosts: web
+ 
+  tasks:
+    - name: Installing httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes

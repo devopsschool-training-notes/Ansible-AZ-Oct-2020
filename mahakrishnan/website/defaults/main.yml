@@ -1,0 +1,4 @@
+---
+# defaults file for website
+
+with_output: 'no output'

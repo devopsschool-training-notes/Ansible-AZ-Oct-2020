@@ -1,0 +1,7 @@
+---
+# defaults file for web
+
+  service: apache
+  myname: Anand
+  age: 20
+  port: 80 

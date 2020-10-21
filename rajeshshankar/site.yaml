@@ -1,6 +1,6 @@
 ---
 - name: webserver setup     
-  hosts: localhost
+  hosts: web
  
 
   roles:

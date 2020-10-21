@@ -1,0 +1,5 @@
+---
+# vars file for web
+
+#service: httpd
+rval: 'role_var'

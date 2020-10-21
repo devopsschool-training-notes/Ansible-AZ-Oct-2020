@@ -1,0 +1,9 @@
+---
+# defaults file for web
+
+service: httpd 
+myname: deva
+age: 35
+port: 8080
+shout: "{{ with_output.stdout }}"
+

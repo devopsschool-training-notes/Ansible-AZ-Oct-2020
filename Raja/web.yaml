@@ -7,4 +7,5 @@
       yum: 
         name: ftp 
         state: installed
-        when: ansible_os_family == "RedHat"
+        when: ansible_os_distribution == "CentOS"
+

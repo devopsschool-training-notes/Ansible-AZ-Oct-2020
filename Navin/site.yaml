@@ -1,0 +1,8 @@
+- name: webserver setup
+  hosts: all
+
+
+  roles:
+    - web
+    - geerlingguy.java
+

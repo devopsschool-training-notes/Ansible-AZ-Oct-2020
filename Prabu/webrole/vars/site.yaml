@@ -1,0 +1,12 @@
+---
+- name: webserver setup
+  hosts: web
+
+  vars_prompt:
+    - name: "Version"
+      prompt: "Which version Do you want to install?"
+      private: false
+
+  roles:
+    - web
+    - andrewrothstein.java-oracle-jdk

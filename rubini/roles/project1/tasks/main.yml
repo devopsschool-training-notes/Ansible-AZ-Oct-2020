@@ -1,0 +1,20 @@
+#  - name: httpd service
+#    yum: name=httpd state=present
+#  - name: starting the httpd server
+#    service: name=httpd state=started
+    - name: Install the latest version of Apache
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy Site Files
+      template: src=index.html.j2 dest=/home/centos/Ansible-AZ-Oct-2020/rubini/roles/project1/files/index.html

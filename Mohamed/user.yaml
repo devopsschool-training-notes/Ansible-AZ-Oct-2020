@@ -1,0 +1,11 @@
+---
+- name: user setup     
+  hosts: web
+ 
+  tasks:
+    - name: Creating a user called "deploy"
+      user:
+        name: deploy-user
+        group: deploy
+        shell: /bin/bash
+        state: present

@@ -1,0 +1,17 @@
+---
+- name: webserver setup
+  hosts: web 
+
+  var_prompt:
+    - name: "pvar"
+        prompt: "Enter a random text : "
+        private: false
+    - name: list the directory
+      shell: "sh myscript.sh"
+      args:
+        chdir: "/tmp"
+      register: with_output
+  roles:
+    - role/web
+    - geerlingguy.java
+

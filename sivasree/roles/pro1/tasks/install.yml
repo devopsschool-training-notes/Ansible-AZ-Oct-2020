@@ -1,0 +1,10 @@
+---
+#Installing apache2
+ - name: installing http server
+      yum:
+        name: httpd
+        state: present
+ - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started 

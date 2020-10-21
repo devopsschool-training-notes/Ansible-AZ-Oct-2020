@@ -1,0 +1,13 @@
+---
+- name: webserver setup     
+  hosts: all
+ 
+  vars_prompt:
+
+    - name: promt_var
+      prompt: Enter something!
+      private: no
+
+  roles:
+    - website
+#    - geerlingguy.java

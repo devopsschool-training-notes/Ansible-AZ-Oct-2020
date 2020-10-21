@@ -1,0 +1,33 @@
+    - name: Install the latest version of Apache
+      yum: name={{ item }} state=installed
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - httpd
+        - vim
+        - ntp
+    - name: Create a Group
+      group:
+        name: deloitte
+        state: present
+    - name: Create a user
+      user:
+        name: deploy
+        group: deloitte
+        shell: /bin/bash
+        state: present
+    - name: list the directory
+      shell: "ls"
+      args:
+        chdir: "/tmp"
+      register: with_output
+    - name: Static Content
+      template: 
+        src: index.html.j2
+        dest: /var/www/html/index.html
+    - name: Copy httpd.conf file
+      template:
+        src: httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+      notify:
+      - Restart httpd

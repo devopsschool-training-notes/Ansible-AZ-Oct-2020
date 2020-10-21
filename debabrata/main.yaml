@@ -1,0 +1,12 @@
+#- hosts: localhost
+---
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - debug:
+        msg: task1
+ 
+    - name: Include task list in play
+      include: stuff.yaml
+ 

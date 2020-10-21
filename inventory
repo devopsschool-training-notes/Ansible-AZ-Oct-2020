@@ -6,3 +6,16 @@
 ansible_ssh_private_key_file=node.pem
 ansible_become=yes
 ansible_user=centos
+
+
+[winserver]
+13.234.75.181
+
+
+[winserver:vars]
+ansible_user=Administrator
+ansible_password=Zr?C6ja@Nj.HyGep-lS(eW.k(.M;zO?c
+ansible_connection=winrm
+ansible_winrm_transport=basic
+ansible_winrm_scheme=https
+ansible_winrm_server_cert_validation=ignore

@@ -23,10 +23,7 @@
       command: "ls /etc/" 
       register: dir_out 
 
-    - debug:
-        msg: This is a directory "{{ name }}" in /etc 
-      with _items: dir_out
 
-#    - debug: 
-#        msg: This is a directory "{{ item }}" in /etc
-#      with _items: "{{ dir_out }}" .stdout_lines
+    - debug: 
+        msg: This is a directory "{{ dir_out }}" in /etc
+      with _items: "{{ dir_out }}"

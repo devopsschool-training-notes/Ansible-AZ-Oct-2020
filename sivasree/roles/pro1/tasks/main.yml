@@ -1,0 +1,4 @@
+
+# tasks file for pro1
+- name: Copy Site Files
+  template: src=index.html.j2 dest=/home/centos/Ansible-AZ-Oct-2020/sivasree/roles/pro1/files/index.html

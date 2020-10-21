@@ -1,0 +1,8 @@
+- name: Assignment     
+  hosts: web
+  vars_prompt:
+    - name: Operating_system
+      prompt: What the os?
+      private: no 
+  roles:
+    - projrole

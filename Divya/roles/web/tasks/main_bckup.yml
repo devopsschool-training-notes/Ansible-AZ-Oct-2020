@@ -1,0 +1,29 @@
+---
+- name: Install the latest version of Apache
+  yum: name=httpd state=installed
+  when: ansible_os_family == "RedHat"
+- name: Fetch output
+  shell: cat /tmp/script.txt
+  register: script
+  args:
+    executable: /bin/bash
+- name: Start service httpd, if not started
+  service: name=httpd state=started
+- name: Copy httpd.conf file
+  template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+  notify:
+  - Restart httpd
+- name: Template a file to index.html.j2
+  template: src=index.html.j2 dest= /var/www/html/index.html
+  notify:
+  - Restart httpd
+- name: create a group called deloitte
+  group: name=deloitte state=present
+- name: user creation
+  user: name=deploy groups=deloitte
+- name: Installing the packages
+   yum: name={{ item }} state=installed
+   with_items:
+     - "ntp"
+     - "git"
+     - "vim"

@@ -1,0 +1,22 @@
+---
+- name: webserver setup
+  hosts: dev,qa
+
+  tasks:
+    - name: Install the latest version of Apache
+      yum: name=httpd state=installed
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Copy httpd.conf file
+      template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+      notify:
+      - Restart httpd
+
+  handlers:
+    - name: Restart httpd
+      service:
+        name: httpd
+        state: restarted
+

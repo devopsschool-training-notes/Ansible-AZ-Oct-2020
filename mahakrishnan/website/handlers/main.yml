@@ -1,0 +1,8 @@
+---
+# handlers file for website
+
+    - name: Restart httpd
+      when: ansible_os_family == "RedHat"
+      service:
+        name: httpd
+        state: restarted

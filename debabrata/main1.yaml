@@ -1,0 +1,11 @@
+#
+#- hosts: localhost
+---
+- name: webserver setup
+  hosts: web
+
+  tasks:
+    - debug:
+        msg: task1
+
+- include: stuff1.yaml

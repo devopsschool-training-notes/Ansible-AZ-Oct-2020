@@ -1,0 +1,50 @@
+---
+# tasks file for website
+
+
+    - name: Install httpd
+      when: ansible_os_family == "RedHat"
+      yum:
+        name: httpd
+        state: installed
+        
+    - name: Copy index Files
+      template: src=index.html.j2 dest=/var/www/html/index.html 
+
+    - name: Copy httpd config Files by changing port 80
+      template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+      notify:
+      - Restart httpd
+
+    - name: Copy file with owner and permissions
+      copy:
+        src: shellscript.sh
+        dest: /home/centos/
+        mode: '0770'
+
+    - name: executing shell script
+      shell: "./shellscript.sh"
+      args:
+        chdir: "/home/centos/"
+      register: with_output
+
+
+    - name: Copy index Files
+      template: src=index.html.j2 dest=/var/www/html/index.html
+
+    - name: Create a group named deploy
+      group:
+        name: deloitte
+
+    - name: Create a user
+      user:
+        name: deployi
+        group: deloitte
+
+    - name: Installing packages
+      yum: name={{ item }} state=installed    
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - ntp
+        - vim

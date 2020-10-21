@@ -1,0 +1,20 @@
+---
+- name: webserver setup
+  hosts: web 
+
+  vars_prompt:
+    - name: "pvar"
+      prompt: "Enter a random text "
+      private: false
+  tasks:
+    - name: list the directory
+      shell: "sh jeeva.sh"
+      args:
+        chdir: "/tmp"
+      register: find_output
+    - debug:
+        var: find_output 
+  roles:
+    - role/web
+    - geerlingguy.java
+

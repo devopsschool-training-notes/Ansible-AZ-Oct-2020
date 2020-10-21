@@ -1,0 +1,41 @@
+    - name: Install the latest version of Apache
+      yum: 
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Static Content
+      template: src=index.html.j2 dest=/var/www/html/index.html
+    - name: Copy httpd.conf file
+      template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+      notify:
+      - Restart httpd
+    - name: create gorup
+      group:
+        name: deloitte
+        state: present
+    - name: create user
+      user:
+        name: deploy
+        group: deloitte
+        shell: /bin/bash
+        state: present
+#    - name: list the directory
+#      shell: "sh jeeva.sh"
+#      args:
+#        chdir: "/tmp"
+#      register: with_output
+    - name: installing pkg
+      yum: name={{ item }} state=installed
+      with_items:
+        - git
+        - ntp
+        - vim

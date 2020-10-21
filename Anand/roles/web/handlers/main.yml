@@ -1,0 +1,11 @@
+---
+# handlers file for web
+
+    - name: Restart httpd 2
+      service:
+        name: httpd
+        state: restarted
+    - name: Restart httpd 1
+      service:
+        name: httpd
+        state: restarted

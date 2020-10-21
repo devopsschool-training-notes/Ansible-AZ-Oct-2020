@@ -1,0 +1,38 @@
+---
+- name: webserver setup
+  hosts: web
+
+  vars:
+    myname: rajeshInPlaybook
+    age: 25
+    port: 80
+
+  tasks:
+    - name: Install the latest version of Apache
+      yum: name={{ item }} state=installed
+      when: ansible_os_family == "RedHat"
+      with_items:
+        - git
+        - httpd
+        - vim
+    - name: Install the latest version of Apache
+      apt:
+        name: apache2
+        state: installed
+      when: ansible_os_family == "Debian"
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+    - name: Static Content
+      template: src=index.html.j2 dest=/var/www/html/index.html
+    - name: Copy httpd.conf file
+      template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+      notify:
+      - Restart httpd
+
+  handlers:
+    - name: Restart httpd
+      service:
+        name: httpd
+        state: restarted

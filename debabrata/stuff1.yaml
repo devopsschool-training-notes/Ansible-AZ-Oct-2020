@@ -1,0 +1,10 @@
+---
+- name: webserver setup
+  hosts: web
+
+#- hosts: localhost
+  tasks:
+    - debug:
+        msg: task1
+    - name: http service state
+      service: name=httpd state=started enabled=yes

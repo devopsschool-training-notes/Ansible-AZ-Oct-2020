@@ -1,0 +1,7 @@
+[web]
+15.206.122.213
+
+[web:vars]
+ansible_user=centoskey_file=node.pem 
+ansible_become=yes
+ansible_user=centos

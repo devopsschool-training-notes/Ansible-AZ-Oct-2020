@@ -1,0 +1,33 @@
+- name: webserver setup
+  hosts: web
+
+  tasks:
+  - name: Install the latest version of Apache
+    yum:
+      name: httpd
+      state: installed
+    when: ansible_os_family == "RedHat"
+  - name: Install the latest version of Apache
+    apt:
+      name: apache2
+      state: installed
+    when: ansible_os_family == "Debian"
+  - name: Start service httpd, if not started
+    service:
+      name: httpd
+      state: started
+  - name: Copy file with owner and permissions
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+
+  - name: list the directory
+    shell: "ls"
+    args:
+      chdir: "/etc"
+    register: with_output
+  - debug:
+      msg: files/directory inside /etc are "{{ item }}"
+    with_items:
+      - 'dir in /etc are "{{ with_output.stdout }}"'
+
