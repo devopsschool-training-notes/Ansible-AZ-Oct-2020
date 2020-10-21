@@ -96,3 +96,153 @@ https://www.devopsschool.com/blog/ansible-include-scnario-with-list-of-plays-or-
 ====================================
 Lab and Assignment
 https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-3/
+=============================================================================
+What is Role?
+===========================
+	Folder Skelton
+	Managment Skills of yours
+	-------------------------
+	For
+	-----------------
+	Managing
+	---------------------
+	--- Too Many Tasks
+	--- Too Many Variables
+	--- Too Many Templates
+	--- Too Many file
+	--- Too Many Handlers
+	--- Custom Code - Module
+===============================================
+How to create empty role ske*
+--- ansible-galaxy
+
+What is ansible-galaxy?
+==============================================
+You write Code(Playbook or role) for Your Product deployment --- keep it in Company Git Repo
+
+Community write Code(Playbook or role) for Your public tools deployment -- keep it in ansible-galaxy
+
+- registry
+- https://galaxy.ansible.com/
+
+
+
+[centos@ip-172-31-1-237 web]$ tree
+.
+├── defaults
+│   └── main.yml		# For vars
+├── files			# For file
+├── handlers			# For handlers
+│   └── main.yml
+├── meta			# For role meta
+│   └── main.yml
+├── README.md
+├── tasks			# For Tasks
+│   └── main.yml
+├── templates			# For .j2
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars			# For vars
+    └── main.yml
+
+=================site.yaml================================
+---
+- name: webserver setup     
+  hosts: localhost
+ 
+
+  roles:
+    - web
+==================================================================
+Working with Windows
+==========================================
+
+Some changes in ACS for Windows
+------------------------------------
+https://www.devopsschool.com/tutorial/ansible/ansible-windows-control-setup.html
+
+Some changes in ARS for Windows
+------------------------------------
+https://www.devopsschool.com/tutorial/ansible/ansible-windows-remote-setup.html
+https://www.devopsschool.com/blog/ansible-error-while-executing-adhoc-commands-playbook-in-windows-remote/
+
+[winserver]
+13.234.75.181
+
+
+[winserver:vars]
+ansible_user=Administrator
+ansible_password=Zr?C6ja@Nj.HyGep-lS(eW.k(.M;zO?c
+ansible_connection=winrm
+ansible_winrm_transport=basic
+ansible_winrm_scheme=https
+ansible_winrm_server_cert_validation=ignore
+
+ansible winserver -i inventory -m win_ping
+https://www.devopsschool.com/tutorial/ansible/ansible-windows-adhoc-commands.html
+https://www.devopsschool.com/tutorial/ansible/ansible-windows-playbooks.html
+
+$password = "Zr?C6ja@Nj.HyGep-lS(eW.k(.M;zO?c"
+
+=================================================================
+Ansible-Vault
+	- tools
+	- Uinsg u can protect secret files
+		with password
+	- Encrypt it and use it.
+
+
+
+
+ 1008  ansible-vault encrypt inventory
+ 1009  more inventory
+ 1010  clear
+ 1011  more inventory
+ 1012  clear
+ 1013  ls
+ 1014  more inventory
+ 1015  clear
+ 1016  ls
+ 1017  ansible winserver -i inventory -m win_ping
+ 1018  ansible -h
+ 1019  clear
+ 1020  ansible winserver -i inventory -m win_ping --ask-vault-pass
+ 1021  ansible-vault view inventory
+ 1022  clear
+ 1023  ls
+ 1024  cd ..
+ 1025  ls
+ 1026  more inventory
+ 1027  clear
+ 1028* ansible winserver -i inventory -m win_ping --as
+ 1029  ansible-vault decrypt inventory
+ 1030  more inventory
+
+========================================================
+QA
+=======================================================
+
+- Videos
+- Slides
+- Notes
+- Tutorials
+- ppts
+=============================================
+
+https://www.devopsschool.com/kit/master-in-devops-engineering.html
+rajesh@devopsschool.com
+www.RajeshKumar.xyz
+
+
+
+
+
+
+
+
+
+
+
+
+
