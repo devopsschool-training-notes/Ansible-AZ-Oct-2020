@@ -1,238 +1,363 @@
-ACS
-13.127.250.5
-=========ARS=================
-Anugu Divya	13.233.21.212
-S. Leebon	13.234.18.163
-Maha krishnan S	13.233.197.79
-Praveen Kumar Pethuraj	65.0.94.159
-Sivasree Balakrishnan	15.206.122.213
-Rubini Udayashankar	13.233.43.219
-Prabu Chandran	13.232.228.180
-RamaKrishna Pasupuleti	3.6.93.173
-JITHIN P JOSEPH	13.234.18.97
-Debabrata Sahu	13.126.124.216
-rajesh shankar 	15.206.158.210
-Raja Somasundaram	13.234.122.185
-Jeevanandan Krishna Kumar	15.206.124.50
-Anand.M	13.232.249.9
-Sarvanan.Bha	13.233.216.162
-Navin Nandakumar	13.232.101.61
-Thaiko Selvaraj	13.235.134.1
-Mohamed Yousuff Kajah	13.232.188.201
-Sureshkumar Rajendran	13.127.127.41
-Priya M	65.0.74.159
-====================================
-Lab and Assignment
-https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-3/
+ - conditioning 
+ - looping
 
-
-================Managmenet PRB===============
-Inventory
-	CMD
-	FILE
-	DIRECTOIRY
-	SCRIPT
-VARS in Inventory
-	Inventory at host
-	Inventory at group
-	Inventory at Gropup of Group
-	Inventory at group_vars
-	Inventory at host_vars
-Tasks
-	Adhoc
-	Playbook
-	What about multiple Playbook??????????
-
-Vars in Playbook?
-	In Playbook
-	IN playbook ext file
-	In Playbook @task level
-	In playbook prompt
-	in Playbook Register
-
-Vars in COMMAND LINE
-
-============================================
-How to manage tasks in multiple yaml file?
-	      ------
-How to manage multiple playbook?
-============================================
-https://www.devopsschool.com/blog/ansible-include-scnario-with-list-of-plays-or-tasks/
-
-------main.yaml------------
-- hosts: localhost
-  tasks:
-    - debug:
-        msg: task1
+ - template config work
+ - Handlers
  
-    - name: Include task list in play
-      include: stuff.yaml
- 
-------stuff.yaml------------
+ - Multiple Playbook
+ - Roles
+
+------------------------FACT Variable------------------------
+- fact of remote host
+- SYSTEM - ENV of the host
+
+Manually - 
+	Module setup
+Wheneven u run playbook - fact variable gathter auto.
+
+============================================================
+Conditioning and Looping with Playbook
+============================================================
+WHEN OS = ubuntu
+	run APT module
+When OS = RHEL
+	run yum module
+WHEN OS = WIndows
+	run ps module
+
 ---
-- name: http service state
-  service: name=httpd state=started enabled=yes
+- name: Update web servers
+  hosts: web
+  vars:
+    myname: "Rajesh Kumar"
 
-
---------main1.yaml--------------
-- hosts: localhost
   tasks:
-    - debug:
-        msg: task1
-
-- include: stuff1.yaml
- 
- 
-------stuff1.yaml------------
----
-- hosts: localhost
-  tasks:
-    - debug:
-        msg: task1
-    - name: http service state
-      service: name=httpd state=started enabled=yes
-
-
-====================================
-Lab and Assignment
-https://www.devopsschool.com/blog/ansible-playbook-lab-excercise-part-3/
-=============================================================================
-What is Role?
-===========================
-	Folder Skelton
-	Managment Skills of yours
-	-------------------------
-	For
-	-----------------
-	Managing
-	---------------------
-	--- Too Many Tasks
-	--- Too Many Variables
-	--- Too Many Templates
-	--- Too Many file
-	--- Too Many Handlers
-	--- Custom Code - Module
-===============================================
-How to create empty role ske*
---- ansible-galaxy
-
-What is ansible-galaxy?
-==============================================
-You write Code(Playbook or role) for Your Product deployment --- keep it in Company Git Repo
-
-Community write Code(Playbook or role) for Your public tools deployment -- keep it in ansible-galaxy
-
-- registry
-- https://galaxy.ansible.com/
+  - name: Install Apache in centos7
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
+    when: ( ansible_os_family == "RedHat" and ansible_system == "Linux")
+  - name: Copy index.html
+    ansible.builtin.copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Starting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+    when: 
+      - ansible_os_family == "RedHat"
+      - ansible_distribution_major_version == "7"
+      - ansible_system == "Linux"
+  - name: My Name is Equals to Rajesh Kumar
+    debug:
+      msg: "My Name is Equals to Rajesh Kumar"
+    when: myname == "Rajesh Kumar"
+  - name: Ansible print when ubuntu
+    debug:
+      msg: "I am ubuntu"
+    when: ansible_os_family == "Debian"
+  - name: My Name is not Equals to Rajesh Kumar
+    debug:
+      msg: "My Name is not Equals to Rajesh Kumar"
+    when: myname != "Rajesh Kumar"
 
 
-
-[centos@ip-172-31-1-237 web]$ tree
-.
-├── defaults
-│   └── main.yml		# For vars
-├── files			# For file
-├── handlers			# For handlers
-│   └── main.yml
-├── meta			# For role meta
-│   └── main.yml
-├── README.md
-├── tasks			# For Tasks
-│   └── main.yml
-├── templates			# For .j2
-├── tests
-│   ├── inventory
-│   └── test.yml
-└── vars			# For vars
-    └── main.yml
-
-=================site.yaml================================
----
-- name: webserver setup     
-  hosts: localhost
- 
-
-  roles:
-    - web
-==================================================================
-Working with Windows
 ==========================================
 
-Some changes in ACS for Windows
-------------------------------------
-https://www.devopsschool.com/tutorial/ansible/ansible-windows-control-setup.html
-
-Some changes in ARS for Windows
-------------------------------------
-https://www.devopsschool.com/tutorial/ansible/ansible-windows-remote-setup.html
-https://www.devopsschool.com/blog/ansible-error-while-executing-adhoc-commands-playbook-in-windows-remote/
-
-[winserver]
-13.234.75.181
 
 
-[winserver:vars]
-ansible_user=Administrator
-ansible_password=Zr?C6ja@Nj.HyGep-lS(eW.k(.M;zO?c
-ansible_connection=winrm
-ansible_winrm_transport=basic
-ansible_winrm_scheme=https
-ansible_winrm_server_cert_validation=ignore
+---
+- name: Update web servers
+  hosts: web
+  vars:
+    listvar1:
+      - 'a'
+      - 'b'
+      - 'c'
 
-ansible winserver -i inventory -m win_ping
-https://www.devopsschool.com/tutorial/ansible/ansible-windows-adhoc-commands.html
-https://www.devopsschool.com/tutorial/ansible/ansible-windows-playbooks.html
+  tasks:
+  - name: Install Apache in centos7
+    ansible.builtin.yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - git
+      - httpd
+      - ntp
+  - name: Copy index.html
+    ansible.builtin.copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Starting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+  - command: echo {{ item }}
+    loop: [ 0, 2, 4, 6, 8, 10 ]
+  - command: echo {{ item }}
+    loop: [ 0, 2, 4, 6, 8, 10 ]
+    when: item > 5
+  - name: Remove users Chuck and Craig from the system.
+    user:
+      name: "{{ item }}"
+      state: absent
+      remove: yes
+    with_items:
+      - chuck
+      - craig
+  - shell: echo "nested test a={{ item[0] }} b={{ item[1] }} c={{ item[2] }}"
+    with_nested:
+      - [ 'red', 'blue', 'green' ]
+      - [ 1, 2, 3 ]
+      - [ 'up', 'down', 'strange']
+  - shell: echo "nested test a={{ item[0] }} b={{ item[1] }}"
+    with_nested:
+     - listvar1
+     - [ 1, 2, 3 ]
+=============================================================================================
+ - template config work
+ - Handlers
+===========================================================================================
+Qs - 
+Decalaring vars in
+- playbook
+- inventory
+- commands
+---------------------
+- Using it in playbook Tasks
 
-$password = "Zr?C6ja@Nj.HyGep-lS(eW.k(.M;zO?c"
 
-=================================================================
-Ansible-Vault
-	- tools
-	- Uinsg u can protect secret files
-		with password
-	- Encrypt it and use it.
+Ansible Template and Handlers explained with Example
+
+We can declare variables in 
+- playbook
+- inventory
+- commands
+
+Which can be used & Intropolate only in playbook Tasks but not in the files used in playbook.
+
+Solution: Template
+Using Template module you can Intropolate vars mentioned in the files used in playbook.
+
+Rule for using template Module
+- A file must be .j2 ext
+- Must use a module call "template"
+
+
+---
+- name: Update web servers
+  hosts: web
+  vars:
+    myname: "Rajesh Kumar"
+
+  tasks:
+  - name: Install Apache in centos7
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
+  - name: Copy index.html
+    ansible.builtin.copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Template index.html
+    template:
+      src: index.html.j2
+      dest: /var/www/html/index-template.html
+  - name: Starting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+
+=================================
+
+Project Requirement
+- When you Change APACHE STATIC HTML Content -> HTTPD restart is not required
+- When you Change APACHE Conf -> HTTPD restart is not required
+- HTTP should be run 90
+- No restart should be done on STATIC
+- Restart must be done at conf changes
+
+
+---
+- name: Update web servers
+  hosts: web
+  vars:
+    myname: "Rajesh Kumar"
+    httpport: 8090
+
+  tasks:
+  - name: Install Apache in centos7
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
+  - name: Copy index.html
+    ansible.builtin.copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Starting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+  - name: stopped a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: stopped
+  - name: Template for httpd.conf
+    template:
+      src: httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+  - name: Starting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+
+======================================================================================
+Problems
+- No change in config file but STOP and START happening
+
+Solution 
+- Handlers
+
+What is Handlers?
+- A section is plyabook similar to tasks section
+- It contains multiple task similar to tasks section
+- The Handler task would execute when you call from tasks's task
+- BUT one condition - ONLY when calling tasks's task is CHANGED == TRUE
+
+---
+- name: Update web servers
+  hosts: web
+  vars:
+    myname: "Rajesh Kumar"
+    httpport: 8090
+
+  tasks:
+  - name: Install Apache in centos7
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
+  - name: Copy index.html
+    ansible.builtin.copy:
+      src: index.html
+      dest: /var/www/html/index.html
+  - name: Starting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+  - name: Template for httpd.conf
+    template:
+      src: httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify:
+      - ReStarting a Apache Server
+
+  handlers:
+  - name: ReStarting a Apache Server
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
+=====================================================================================
+=====================================================================================
+Managing 
+- Playbook(S)
+- Variable(S)
+- Template
+- file
+- Handlers
+==========================
+How to give a right strcuture?
+	- Easy to share - run - debug - documents
+	- Best practices
+
+==========================================
+https://www.devopsschool.com/blog/ansible-include-scnario-with-list-of-plays-or-tasks/
+
+Solutuion - Role
+---------------------------
+its a dire strcuture to Manage 
+- Playbook(S) - TASK(S)
+- Variable(S)
+- Template(S)
+- file(S)
+- Handlers(S)
+
+How to create a role?
+
+ansible-galaxy
+
+
+ansible-galaxy role init web
+
+
+
+├── web
+│   ├── defaults		# for default vars
+│   │   └── main.yml
+│   ├── files			# files used in tasks
+│   ├── handlers		# Handlers tasks
+│   │   └── main.yml
+│   ├── meta			META INFO OF ROLE
+│   │   └── main.yml
+│   ├── README.md
+│   ├── tasks			# for Tasks
+│   │   └── main.yml
+│   ├── templates		# Templates used in tasks	
+│   ├── tests
+│   │   ├── inventory
+│   │   └── test.yml
+│   └── vars			# for vars
+│       └── main.yml
+
+
+How to call role?
+=================================
+
+---
+- name: Calling a role
+  hosts: web
+  roles:
+    - web
+    - db
+
+ansible-playbook -i inventory site.yaml
+
+ 1118  java
+ 1119  ansible-galaxy install geerlingguy.java
+ 1120  ls
+ 1121  cd /home/azureuser/.ansible/roles
+ 1122  ls
+ 1123  tree
+ 1124  clear
+ 1125  ls
+ 1126  cd -
+ 1127  ls
+ 1128  vi site.yaml
+ 1129  ansible-playbook -i inventory site.yaml
+ 1130  java
+ 1131  history
+
+
+LAB - 15 mins
+
+Project - 1 HOUR https://www.devopsschool.com/blog/ansible-role-project-1/
 
 
 
 
- 1008  ansible-vault encrypt inventory
- 1009  more inventory
- 1010  clear
- 1011  more inventory
- 1012  clear
- 1013  ls
- 1014  more inventory
- 1015  clear
- 1016  ls
- 1017  ansible winserver -i inventory -m win_ping
- 1018  ansible -h
- 1019  clear
- 1020  ansible winserver -i inventory -m win_ping --ask-vault-pass
- 1021  ansible-vault view inventory
- 1022  clear
- 1023  ls
- 1024  cd ..
- 1025  ls
- 1026  more inventory
- 1027  clear
- 1028* ansible winserver -i inventory -m win_ping --as
- 1029  ansible-vault decrypt inventory
- 1030  more inventory
 
-========================================================
-QA
-=======================================================
 
-- Videos
-- Slides
-- Notes
-- Tutorials
-- ppts
-=============================================
 
-https://www.devopsschool.com/kit/master-in-devops-engineering.html
-rajesh@devopsschool.com
-www.RajeshKumar.xyz
+
+
+
+
+
+
+
+
+
+
 
 
 
